@@ -14,13 +14,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        
         $users = [
             ['name' => 'John Doe', 'email' => 'johndoe@example.com', 'password' => Hash::make('password')],
             ['name' => 'Jane Smith', 'email' => 'janesmith@example.com', 'password' => Hash::make('password')],
         ];
 
         foreach ($users as $data) {
-            User::create($data);
+            $adminUser = User::create($data);
+            $adminUser->assignRole($adminRole);
         }
     }
 }
